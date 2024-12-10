@@ -14,6 +14,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>21</maven.compiler.release>
+    <native.maven.plugin.version>0.10.4</native.maven.plugin.version>
+    <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
+    <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
   </properties>
 
   <dependencyManagement>

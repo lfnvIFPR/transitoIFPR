@@ -10,8 +10,10 @@ public class App {
         Scanner sc = new Scanner(System.in);
         System.out.println("Escreva o nome do usuário a autenticar: ");
         String nome = sc.nextLine();
+        System.out.println("Escreva a senha: ");
+        String senha = sc.nextLine();
         Autenticador entrada = new Autenticador();
-        IUsuario a = entrada.gerarUsuario(nome, null);
+        IUsuario a = entrada.gerarUsuario(nome, senha);
         if (a != null) {
             System.out.println("Olá, " + a.getNome() + "! Estes são os comandos que você pode executar.");
             ArrayList<String> comandos = new ArrayList<String>(a.getComandosAcessiveis());
