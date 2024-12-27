@@ -1,91 +1,136 @@
 package projetosIFPR.transitoIFPR.BD;
 
+import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
-import static java.util.Map.entry;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Date;
-import java.sql.Timestamp;
 
 public class BancoDeDados {
 
     private Connection conn;
 
-    // Emulação de um banco de dados, até agora. Mude para SQL depois;
-    // A String isolada representa a PK da tabela;
-    private static Map<String, BDAdmin> tabelaAdmin = Map.ofEntries(
-            entry("A000000000000001", new BDAdmin("OlaMundo", LocalDateTime.now())),
-            entry("A000000000000002", new BDAdmin("senhasenha", LocalDateTime.now())),
-            entry("A000000000000003", new BDAdmin("testando123", LocalDateTime.now())),
-            entry("A000000000000004", new BDAdmin("=!Simbolos!=", LocalDateTime.now()))
-    );
+    public boolean IDValido(String ID) {
 
-    private static Map<String, BDCondutor> tabelaCondutor = Map.ofEntries(
-            entry("123456789", new BDCondutor("senha", LocalDate.now(), LocalDate.now(), 0, LocalDate.now())),
-            entry("987654321", new BDCondutor("!", LocalDate.now(), LocalDate.now(), 4, LocalDate.now())),
-            entry("001122334", new BDCondutor("hahahehe", LocalDate.now(), LocalDate.now(), 32, LocalDate.now())),
-            entry("700000007", new BDCondutor("numDaSorte", LocalDate.now(), LocalDate.now(), 1, LocalDate.now()))
-    );
+        String sql = """
+            SELECT 1
+            FROM administrador WHERE id_admin = ?
+            UNION
+            SELECT 1
+            FROM condutor WHERE numero_CNH = ?
+            UNION
+            SELECT 1
+            FROM agente_fiscalizador WHERE id_agente = ?
+            LIMIT 1
+        """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            // Define o mesmo parâmetro para as 3 tabelas
+            stmt.setString(1, ID);
+            stmt.setString(2, ID);
+            stmt.setString(3, ID);
 
-    private static Map<String, BDFiscalizador> tabelaFiscal = Map.ofEntries(
-            entry("F000000000000001", new BDFiscalizador("fiscal1", "Radar Automatico", LocalDate.now())),
-            entry("F100000000000000", new BDFiscalizador("!=##$%54", "Agente Fiscal", LocalDate.now()))
-    );
+            // Executa a consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
 
-
-    public static boolean IDValido(String ID) {
-        return tabelaAdmin.containsKey(ID) ||
-                tabelaCondutor.containsKey(ID) ||
-                tabelaFiscal.containsKey(ID);
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return false;
     }
 
-    public static BDAdmin obterRegistroA(String key) {
-        if (tabelaAdmin.containsKey(key)) return tabelaAdmin.get(key);
+    public BDAdmin obterRegistroA(String key) {
+        String sql = "SELECT * FROM administrador WHERE id_admin = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, key);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String hashSenha = rs.getString("hash_senha");
+                    Timestamp ultimaDataAtividade = rs.getTimestamp("ultima_data_atividade");
+                    String salt = rs.getString("salt");
+
+                    return new BDAdmin(hashSenha, ultimaDataAtividade.toLocalDateTime(), salt);
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
         return null;
     }
-    public static BDFiscalizador obterRegistroF(String key) {
-        if (tabelaFiscal.containsKey(key)) return tabelaFiscal.get(key);
+
+    public BDFiscalizador obterRegistroF(String key) {
+        String sql = "SELECT * FROM agente_fiscalizador WHERE id_agente = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, key);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String nome = rs.getString("nome");
+                    String hashSenha = rs.getString("hash_senha");
+                    String salt = rs.getString("salt");
+                    Timestamp ultimaDataAtividade = rs.getTimestamp("ultima_data_atividade");
+
+                    return new BDFiscalizador(hashSenha, nome, ultimaDataAtividade.toLocalDateTime(), salt);
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
         return null;
     }
-    public static BDCondutor obterRegistroC(String key) {
-        if (tabelaCondutor.containsKey(key)) return tabelaCondutor.get(key);
+
+    // Método para obter um registro da tabela condutor
+    public BDCondutor obterRegistroC(String key) {
+        String sql = "SELECT * FROM condutor WHERE numero_CNH = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, key);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String hashSenha = rs.getString("hash_senha");
+                    Date dataCnh = rs.getDate("data_cnh");
+                    Date dataNascimento = rs.getDate("data_nascimento");
+                    int pontosCNH = rs.getInt("pontuacao_atual");
+                    Timestamp ultimaDataAtividade = rs.getTimestamp("ultima_data_atividade");
+                    String salt = rs.getString("salt");
+
+                    return new BDCondutor(hashSenha, dataCnh.toLocalDate(), dataNascimento.toLocalDate(), pontosCNH, ultimaDataAtividade.toLocalDateTime(), salt);
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
         return null;
     }
 
     public BancoDeDados() {
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("ClassNotFoundException: " + ex.getMessage());
-        }
-        
-        
         try {
             
             this.conn =
-              DriverManager.getConnection("jdbc:mysql://localhost:3306/transito", "admin", "60fe74406e7f353ed979f350f2fbb6a2e8690a5fa7d1b0c32983d1d8b3f95f67");
-        
-                for (Map.Entry<String, BDAdmin> entry : tabelaAdmin.entrySet()) {
-                    String key = entry.getKey();
-                    BDAdmin val = entry.getValue();
+              DriverManager.getConnection("jdbc:mysql://localhost:3306/transito", "java", "javaConnector");
+//
+//            Statement stmt = conn.createStatement();
+//            ResultSet rs = stmt.executeQuery("SELECT table_name\n" +
+//                "FROM information_schema.tables\n" +
+//                "WHERE table_type='BASE TABLE'\n" +
+//                "      AND table_schema = 'transito'");
+//
+//            while (rs.next()) {
+//                String tableName = rs.getString(1);
+//                System.out.println("Table " + tableName);
+//            }
 
-                    ArrayList<Object> params = val.export();
-                    params.addFirst(key);
-
-
-                    query("INSERT INTO administrador VALUES (?, ?, ?, ?);", params);
-                }
-                                        
-
-            
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());

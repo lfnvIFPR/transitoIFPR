@@ -18,9 +18,10 @@ public class BDAdmin {
         this.ultimaDataAtividade = ultimaDataAtividade;
     }
 
-    public ArrayList<Object> export() {
-        Object[] elems = {this.hashSenha, this.ultimaDataAtividade, this.salt};
-        return new ArrayList<Object>(Arrays.asList(elems));
+    public BDAdmin(String hashSenha, LocalDateTime ultimaDataAtividade, String salt) {
+        this.hashSenha = hashSenha;
+        this.ultimaDataAtividade = ultimaDataAtividade;
+        this.salt = salt;
     }
 
 }
