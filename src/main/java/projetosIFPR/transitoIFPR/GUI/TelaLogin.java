@@ -59,12 +59,12 @@ public class TelaLogin extends JFrame {
     private void gerarLayout() {
         JPanel main = new JPanel();
         setLayout(null);
-        setSize(750, 750);
+        setSize(850, 700);
         main.setLayout(new GridBagLayout());
 
-        JPanel secundario = new JPanel();
+        JPanel secundario = new JPanel(new GridLayout(0, 1));
 
-        secundario.setSize(300, 10);
+        secundario.setSize(450, 10);
         secundario.setBackground(new Color(0x36393b));
 
         JPanel primario = new JPanel();
@@ -132,6 +132,15 @@ public class TelaLogin extends JFrame {
         idPanel.add(centralizar(ID, idPanel));
         senhaPanel.add(centralizar(senha, senhaPanel));
 
+        URL clipartURL = getClass().getClassLoader().getResource("png/clipart.png");
+        ImageIcon clipartImg = new ImageIcon(clipartURL);
+        clipartImg = new ImageIcon(
+                clipartImg.getImage()
+                        .getScaledInstance(360, 360, Image.SCALE_SMOOTH));
+        JLabel clipart = new JLabel(clipartImg);
+        clipart.setVerticalAlignment(SwingConstants.CENTER);
+
+        secundario.add(clipart);
 
         setContentPane(main);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
