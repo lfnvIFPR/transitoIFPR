@@ -21,8 +21,8 @@ public class App {
         // String senha = sc.nextLine();
 
 
-        new GUIController();
-        TelaLogin login = new TelaLogin();
+        GUIController.setup();
+        GUIController.configurarAtivo(new TelaLogin());
         //sc.close();
     }
 }

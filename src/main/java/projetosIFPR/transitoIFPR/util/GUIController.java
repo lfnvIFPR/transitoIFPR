@@ -2,6 +2,7 @@ package projetosIFPR.transitoIFPR.util;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 
 public class GUIController {
 
-    private ArrayList<String> fontes = new ArrayList<>(Arrays.asList(
+    private static ArrayList<String> fontes = new ArrayList<>(Arrays.asList(
             "ttf/JetBrainsMono-Bold.ttf",
             "ttf/JetBrainsMono-BoldItalic.ttf",
             "ttf/JetBrainsMono-ExtraBold.ttf",
@@ -23,15 +24,26 @@ public class GUIController {
             "ttf/JetBrainsMono-Medium.ttf",
             "ttf/JetBrainsMono-MediumItalic.ttf"));
 
-    public GUIController() {
+    private static JFrame ativo = null;
+
+    public static void setup() {
         FlatDarculaLaf.setup();
         carregar();
+
     }
 
-    private void carregar() {
+    public static void configurarAtivo(JFrame novo) {
+        if (ativo != null) {
+            ativo.dispose();
+        }
+        ativo = novo;
+        novo.setVisible(true);
+    }
+
+    private static void carregar() {
         for (String fonte: fontes) {
             try {
-                InputStream fontStream = getClass().getClassLoader().getResourceAsStream(fonte);
+                InputStream fontStream = GUIController.class.getClassLoader().getResourceAsStream(fonte);
                 if (fontStream != null) {
                     Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

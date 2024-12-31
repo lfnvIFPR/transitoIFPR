@@ -3,6 +3,7 @@ package projetosIFPR.transitoIFPR.GUI;
 import projetosIFPR.transitoIFPR.Autenticador;
 import projetosIFPR.transitoIFPR.BD.BancoDeDados;
 import projetosIFPR.transitoIFPR.IUsuario;
+import projetosIFPR.transitoIFPR.util.GUIController;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -46,6 +47,7 @@ public class TelaLogin extends JFrame {
 
                     }
                     JOptionPane.showMessageDialog(null, "Olá, usuário @" + usuario.getNome() + "!\n Você possui os comandos: " + sb.toString());
+                    GUIController.configurarAtivo(new PainelPrincipal());
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
                     senha.setText(null);
@@ -144,7 +146,6 @@ public class TelaLogin extends JFrame {
 
         setContentPane(main);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
     }
 
     JPanel centralizar(Component c, Component container) {
