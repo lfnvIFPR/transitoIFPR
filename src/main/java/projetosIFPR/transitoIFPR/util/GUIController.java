@@ -4,8 +4,10 @@ import com.formdev.flatlaf.FlatDarculaLaf;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -37,6 +39,12 @@ public class GUIController {
             ativo.dispose();
         }
         ativo = novo;
+        Dimension dim = ativo.getSize();
+        Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Centraliza a janela no meio da tela
+        ativo.setLocation((tela.width - dim.width) / 2, (tela.height - dim.height) / 2);
+
         novo.setVisible(true);
     }
 
