@@ -3,16 +3,15 @@ package projetosIFPR.transitoIFPR.GUI;
 import projetosIFPR.transitoIFPR.Autenticador;
 import projetosIFPR.transitoIFPR.BD.BancoDeDados;
 import projetosIFPR.transitoIFPR.IUsuario;
-import projetosIFPR.transitoIFPR.util.GUIController;
+import projetosIFPR.transitoIFPR.estado.EstadoApp;
+import projetosIFPR.transitoIFPR.estado.GUIController;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class TelaLogin extends JFrame {
@@ -47,6 +46,7 @@ public class TelaLogin extends JFrame {
 
                     }
                     JOptionPane.showMessageDialog(null, "Olá, usuário @" + usuario.getNome() + "!\n Você possui os comandos: " + sb.toString());
+                    EstadoApp.setUsuarioLogado(usuario);
                     GUIController.configurarAtivo(new PainelPrincipal());
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);

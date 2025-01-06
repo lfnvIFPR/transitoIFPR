@@ -1,14 +1,7 @@
 package projetosIFPR.transitoIFPR;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
-
-import projetosIFPR.transitoIFPR.BD.BancoDeDados;
 import projetosIFPR.transitoIFPR.GUI.TelaLogin;
-import projetosIFPR.transitoIFPR.util.GUIController;
-
-import java.util.List;
+import projetosIFPR.transitoIFPR.estado.GUIController;
 
 public class App {
     public static void main(String[] args) {

@@ -2,7 +2,7 @@
 
 ## Geral
 - [ ] Listar os comandos acessíveis a mim
-- [ ] Acessar data de último login
+- [X] Acessar dados do própio usuário
 - [ ] Ver notificações
 
 ## Administração

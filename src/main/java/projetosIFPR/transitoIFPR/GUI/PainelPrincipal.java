@@ -1,5 +1,7 @@
 package projetosIFPR.transitoIFPR.GUI;
 
+import projetosIFPR.transitoIFPR.GUI.Componentes.TextoDatalist;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
@@ -7,6 +9,7 @@ import java.net.URL;
 public class PainelPrincipal extends JFrame {
 
     private JPanel barraLateral;
+    private JPanel conteudoPrimario;
 
     public PainelPrincipal() {
         super("Sistema de trânsito - IFPR");
@@ -19,8 +22,12 @@ public class PainelPrincipal extends JFrame {
     }
 
     private void gerarLayout() {
-        JLabel texto = new JLabel("Olá mundo!");
-        add(texto, BorderLayout.CENTER);
+        conteudoPrimario = new JPanel(new CardLayout());
+        conteudoPrimario.setOpaque(false);
+//        add(conteudoPrimario, BorderLayout.CENTER);
+
+
+        add(new TextoDatalist(new String[] {"123", "456"}), BorderLayout.CENTER);
 
         barraLateral = new JPanel();
         barraLateral.setPreferredSize(new Dimension(200, 10));

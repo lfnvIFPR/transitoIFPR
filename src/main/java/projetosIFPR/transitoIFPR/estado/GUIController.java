@@ -1,4 +1,4 @@
-package projetosIFPR.transitoIFPR.util;
+package projetosIFPR.transitoIFPR.estado;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 

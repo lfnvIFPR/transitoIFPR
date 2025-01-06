@@ -2,3 +2,4 @@ target
 .vscode
 .mvn
 .idea
+lib
