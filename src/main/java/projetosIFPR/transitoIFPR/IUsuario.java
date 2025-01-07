@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUsuario {
     String getNome();
-    List<String> getComandosAcessiveis();
+    String[] getComandosAcessiveis();
     void configurarComando(Comando comandoAtivo);
     void executarComando();
 

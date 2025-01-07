@@ -2,19 +2,13 @@ package projetosIFPR.transitoIFPR;
 
 import projetosIFPR.transitoIFPR.comandos.Comando;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Condutor implements IUsuario {
     private Comando comandoAtivo;
     private String ID;
 
-    private ArrayList<String> comandosAcessiveis = new ArrayList<String>(
-            Arrays.asList(
-                    new String[]{"CONDUTOR", "COMUM"}
-            )
-    );
+    private String[] comandosAcessiveis = new String[]{"CONDUTOR", "COMUM"};
 
     public Condutor(String ID) {
         this.ID = ID;
@@ -28,7 +22,7 @@ public class Condutor implements IUsuario {
     public String getNome() {
         return this.ID;
     }
-    public List<String> getComandosAcessiveis() {
-        return List.copyOf(comandosAcessiveis);
+    public String[] getComandosAcessiveis() {
+        return Arrays.copyOf(this.comandosAcessiveis, this.comandosAcessiveis.length);
     }
 }

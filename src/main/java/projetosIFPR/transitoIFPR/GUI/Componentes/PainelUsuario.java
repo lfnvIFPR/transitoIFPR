@@ -20,12 +20,12 @@ public class PainelUsuario implements OpcaoLista {
 
     @Override
     public boolean possuiComponente() {
-        return false;
+        return true;
     }
 
     @Override
     public Component getComponente() {
-        return null;
+        return new JLabel(getNome());
     }
 
     private void gerarLayout() {

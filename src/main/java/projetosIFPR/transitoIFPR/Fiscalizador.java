@@ -3,19 +3,13 @@ package projetosIFPR.transitoIFPR;
 import projetosIFPR.transitoIFPR.comandos.Comando;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Fiscalizador implements IUsuario {
     private Comando comandoAtivo;
     private String ID;
 
-    private ArrayList<String> comandosAcessiveis = new ArrayList<String>(
-            Arrays.asList(
-                    new String[]{"FISCAL", "COMUM"}
-            )
-    );
+    private String[] comandosAcessiveis = new String[]{"FISCAL", "COMUM"};
 
     public Fiscalizador(String ID) {
         this.ID = ID;
@@ -29,7 +23,7 @@ public class Fiscalizador implements IUsuario {
     public String getNome() {
         return this.ID;
     }
-    public List<String> getComandosAcessiveis() {
-        return List.copyOf(comandosAcessiveis);
+    public String[] getComandosAcessiveis() {
+        return Arrays.copyOf(this.comandosAcessiveis, this.comandosAcessiveis.length);
     }
 }

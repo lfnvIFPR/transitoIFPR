@@ -36,11 +36,11 @@ public class TelaLogin extends JFrame {
                 IUsuario usuario = entrada.gerarUsuario(ID.getText(), String.valueOf(senha.getPassword()), bd);
 
                 if (usuario != null) {
-                    ArrayList<String> comandos = new ArrayList<String>(usuario.getComandosAcessiveis());
+                    String[] comandos = usuario.getComandosAcessiveis();
                     StringBuilder sb = new StringBuilder();
                     for (String comando: comandos) {
                         sb.append(comando);
-                        if (!Objects.equals(comando, comandos.getLast())) {
+                        if (!Objects.equals(comando, comandos[comandos.length - 1])) {
                             sb.append(", ");
                         }
 

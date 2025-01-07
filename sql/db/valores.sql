@@ -5,6 +5,8 @@ CREATE USER IF NOT EXISTS 'java'@'localhost' IDENTIFIED BY 'javaConnector';
 GRANT ALL PRIVILEGES ON transito.* TO 'java'@'localhost';
 FLUSH PRIVILEGES;
 
+USE transito;
+
 INSERT IGNORE INTO administrador (id_admin, ultima_data_atividade, hash_senha, salt)
 VALUES
     -- Senhas:
@@ -23,8 +25,8 @@ VALUES
     -- Senhas:
     -- 001 => fiscal1
     -- 002 => !=##$%54
-    ('A000000000000001', 'Agente Fiscal 1', CURRENT_TIMESTAMP, 'a4d394f43361e834ee5c0149c7be89d1dc972b12e84c22cb1ad0f0dec5b2118b', '11111111'),
-    ('A000000000000002', 'Radar Automático', CURRENT_TIMESTAMP, '369c78ff678fca74d8bea93397e58e509588020d9d270b9e64feee05e6999d70', '22222222');
+    ('F000000000000001', 'Agente Fiscal 1', CURRENT_TIMESTAMP, 'a4d394f43361e834ee5c0149c7be89d1dc972b12e84c22cb1ad0f0dec5b2118b', '11111111'),
+    ('F000000000000002', 'Radar Automático', CURRENT_TIMESTAMP, '369c78ff678fca74d8bea93397e58e509588020d9d270b9e64feee05e6999d70', '22222222');
 
 INSERT IGNORE INTO condutor (numero_CNH, data_cnh, data_nascimento, ultima_data_atividade, hash_senha, salt)
 VALUES
