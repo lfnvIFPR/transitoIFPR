@@ -18,20 +18,20 @@ public class Autenticador{
                 BDFiscalizador dadosF = BD.obterRegistroF(ID);
                 if (Objects.isNull(dadosF)) return null;
                 if (!verificarSenha(senha, dadosF.salt, dadosF.hashSenha)) return null;
-                usuario = new Fiscalizador(ID);
+                usuario = new Fiscalizador(ID, dadosF.ultimaDataAtividade);
                 break;
             case 'A':
                 BDAdmin dadosA = BD.obterRegistroA(ID);
                 if (Objects.isNull(dadosA)) return null;
                 if (!verificarSenha(senha, dadosA.salt, dadosA.hashSenha)) return null;
-                usuario = new Administrador(ID);
+                usuario = new Administrador(ID, dadosA.ultimaDataAtividade);
                 break;
             default:
                 if (ID.length() == 9) {
                     BDCondutor dadosC = BD.obterRegistroC(ID);
                     if (Objects.isNull(dadosC)) return null;
                     if (!verificarSenha(senha, dadosC.salt, dadosC.hashSenha)) return null;
-                    usuario = new Condutor(ID);
+                    usuario = new Condutor(ID, dadosC.ultimaDataAtividade);
                 }
                 return usuario;
         }

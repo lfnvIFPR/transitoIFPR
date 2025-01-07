@@ -10,6 +10,11 @@ public class PaineisAdmin implements OpcaoLista {
     }
 
     @Override
+    public String getDescricao() {
+        return "";
+    }
+
+    @Override
     public boolean possuiComponente() {
         return false;
     }

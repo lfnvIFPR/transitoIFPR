@@ -9,6 +9,12 @@ public class PaineisComum implements OpcaoLista {
         return "COMUM";
     }
 
+
+    @Override
+    public String getDescricao() {
+        return "";
+    }
+
     @Override
     public boolean possuiComponente() {
         return false;

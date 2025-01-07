@@ -1,7 +1,5 @@
 package projetosIFPR.transitoIFPR.estado;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,7 +27,8 @@ public class GUIController {
     private static JFrame ativo = null;
 
     public static void setup() {
-        FlatDarculaLaf.setup();
+        transitoIFPR.installLafInfo();
+        transitoIFPR.setup();
         carregar();
 
     }

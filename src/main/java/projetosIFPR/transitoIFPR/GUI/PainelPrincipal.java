@@ -2,11 +2,16 @@ package projetosIFPR.transitoIFPR.GUI;
 
 import projetosIFPR.transitoIFPR.IUsuario;
 import projetosIFPR.transitoIFPR.GUI.Componentes.OpcaoLista;
+import projetosIFPR.transitoIFPR.GUI.Componentes.PaineisAdmin;
 import projetosIFPR.transitoIFPR.GUI.Componentes.PaineisComum;
 import projetosIFPR.transitoIFPR.GUI.Componentes.PainelUsuario;
 import projetosIFPR.transitoIFPR.estado.EstadoApp;
+import projetosIFPR.transitoIFPR.utilidade.Palavras;
 
 import javax.swing.*;
+
+import net.miginfocom.swing.MigLayout;
+
 import java.awt.*;
 import java.net.URL;
 
@@ -34,9 +39,12 @@ public class PainelPrincipal extends JFrame {
 
         barraLateral = new JPanel();
         barraLateral.setPreferredSize(new Dimension(200, 10));
-        barraLateral.setLayout(new BoxLayout(barraLateral, BoxLayout.Y_AXIS));
+        barraLateral.setLayout(new MigLayout("wrap 1, inset 1%"));
 
-        OpcaoLista[][] botoes = { {new PaineisComum(), new PainelUsuario("Usuário"), new PainelUsuario("abbaba")}};
+        OpcaoLista[][] botoes = { 
+            {new PaineisComum(), new PainelUsuario("Usuário"), new PainelUsuario("abbaba")},
+            {new PaineisAdmin(), new PainelUsuario("Usuário administrador")}
+        };
 
         IUsuario usuarioLogado = EstadoApp.getUsuarioLogado();
 
@@ -47,27 +55,35 @@ public class PainelPrincipal extends JFrame {
             OpcaoLista tipoPainel = categoria[0];
             String nomeCategoria = tipoPainel.getNome();
 
-            boolean categoriaAtiva = false;
+            boolean categoriaValida = false;
             for (String opcao : opcoes) {
                 if (opcao.compareTo(nomeCategoria) == 0) {
-                    categoriaAtiva = true;
+                    categoriaValida = true;
                     break;
                 }
             }
             
-            if (!categoriaAtiva) {
+            if (!categoriaValida) {
                 continue;
             }
 
-            for (int i = 1; i < categoria.length; i++) {
+            for (int i = 0; i < categoria.length; i++) {
                 OpcaoLista painel = categoria[i];
-                JButton botao = new JButton(painel.getNome());
-                barraLateral.add(botao);
-                conteudoPrimario.add(painel.getComponente(), painel.getNome());
-                botao.addActionListener(e -> {
-                    CardLayout cl = (CardLayout) conteudoPrimario.getLayout();
-                    cl.show(conteudoPrimario, painel.getNome());
-                });
+
+                if (painel.possuiComponente()) {
+                    JButton botao = new JButton(painel.getNome());
+                    botao.setToolTipText(painel.getDescricao());
+                    barraLateral.add(botao, "gapleft 8%, w 80%!, align center");
+                    conteudoPrimario.add(painel.getComponente(), painel.getNome());
+                    botao.addActionListener(e -> {
+                        CardLayout cl = (CardLayout) conteudoPrimario.getLayout();
+                        cl.show(conteudoPrimario, painel.getNome());
+                    });
+                } else {
+                    JLabel categoriaLabel = new JLabel(Palavras.capitalizar(nomeCategoria));
+                    barraLateral.add(categoriaLabel, "gapleft 4%, w 80%!");
+
+                }
             }
 
 
