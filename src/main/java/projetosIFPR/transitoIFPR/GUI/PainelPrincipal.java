@@ -36,6 +36,16 @@ public class PainelPrincipal extends JFrame {
                 "[200!][800!]",
                 "[800!]"
         ));
+
+        JPanel header = new JPanel(new MigLayout("insets 1%"));
+        header.setPreferredSize(new Dimension(0, 40));
+        header.setBackground(new Color(0x2d2f30));
+        add(header, "dock north");
+
+        JLabel ifpr = new JLabel("IFPR");
+        ifpr.putClientProperty("FlatLaf.styleClass", "h1");
+        header.add(ifpr, "gapleft 32");
+
         conteudoPrimario = new JPanel(new CardLayout());
         conteudoPrimario.setOpaque(false);
 
@@ -55,7 +65,10 @@ public class PainelPrincipal extends JFrame {
                         "Encerrar sessão e voltar para a tela de log in.",
                         true)
             },
-            {new PaineisAdmin(), new PainelUsuario("Admin")}
+            {
+                new PaineisAdmin(), 
+                new PainelSistema("Sistema")
+            }
         };
 
         IUsuario usuarioLogado = EstadoApp.getUsuarioLogado();
@@ -103,7 +116,7 @@ public class PainelPrincipal extends JFrame {
                     JButton botao = new JButton(opcao.getNome());
                     botao.setToolTipText(opcao.getDescricao());
 
-                    if (opcao instanceof BotaoImportante) {
+                    if (((BotaoExecutor) opcao).botaoImportante()) {
                         botao.setBackground(new Color(0xff6666));
                         botao.setForeground(new Color(0xeeeeee));
                         botao.setFont(botao.getFont().deriveFont(Font.BOLD));
@@ -122,7 +135,7 @@ public class PainelPrincipal extends JFrame {
         }
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(800, 600);
+        pack();
     }
 
 

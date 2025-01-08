@@ -138,32 +138,35 @@ public class BancoDeDados {
         }
     }
 
-    public void query(String stmt, ArrayList<Object> params) {
+    public ResultSet query(String stmt, Object[] params) {
         PreparedStatement prep;
         try {
             prep = this.conn.prepareStatement(stmt);
 
-            for(int i = 1; i < params.size(); i++) {
-                Object param = params.get(i);
+            for(int i = 0; i < params.length; i++) {
+                Object param = params[i];
                 if (param.getClass() == int.class) {
-                    prep.setInt(i, (int) param);
+                    prep.setInt(i + 1, (int) param);
                 } else if (param.getClass() == String.class) {
-                    prep.setString(i, (String) param);
+                    prep.setString(i + 1, (String) param);
                 } else if (param.getClass() == LocalDateTime.class) {
                     LocalDateTime ldt = (LocalDateTime) param;
-                    Timestamp ts = new Timestamp(ldt.toEpochSecond(ZoneOffset.UTC));
-                    prep.setTimestamp(i, ts);
+                    Timestamp ts = Timestamp.valueOf(ldt);
+                    prep.setTimestamp(i + 1, ts);
                 }
             }
 
-            prep.execute();
+            ResultSet rs = prep.executeQuery();
+            return rs;
             
         } catch (SQLException ex) {
-            // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
+            System.out.println("Query: " + stmt);
         }
+
+        return null;
     }
 
 }

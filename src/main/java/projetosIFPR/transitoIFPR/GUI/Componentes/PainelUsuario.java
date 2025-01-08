@@ -49,6 +49,10 @@ public class PainelUsuario implements OpcaoLista {
         fisico = new JPanel(new MigLayout("insets 3%, wrap 1"));
 
 
+        JLabel titulo = new JLabel("Usuário");
+        titulo.putClientProperty("FlatLaf.styleClass", "h1");
+        fisico.add(titulo, "align left, growx");
+
         JPanel usuarioPanel = new JPanel(new MigLayout(
             "w 100%!",
             "[shrink 0]10[grow]",

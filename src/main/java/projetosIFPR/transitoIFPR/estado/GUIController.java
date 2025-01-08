@@ -27,9 +27,9 @@ public class GUIController {
     private static JFrame ativo = null;
 
     public static void setup() {
+        carregar();
         transitoIFPR.installLafInfo();
         transitoIFPR.setup();
-        carregar();
 
     }
 
