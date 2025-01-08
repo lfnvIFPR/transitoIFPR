@@ -32,7 +32,7 @@ public class PainelUsuario implements OpcaoLista {
 
     @Override
     public String getDescricao() {
-        return "Exibe informações sobre o usuário logado no sistema.";
+        return "Visualiza informações sobre o seu cadastro no sistema.";
     }
 
     @Override
@@ -46,16 +46,16 @@ public class PainelUsuario implements OpcaoLista {
     }
 
     private void gerarLayout() {
-        fisico = new JPanel(new MigLayout("insets 10"));
+        fisico = new JPanel(new MigLayout("insets 3%, wrap 1"));
 
 
         JPanel usuarioPanel = new JPanel(new MigLayout(
-            "",
-            "40[]8[]40",
-            "[][]"
+            "w 100%!",
+            "[shrink 0]10[grow]",
+            "[]"
         ));
 
-        fisico.add(usuarioPanel, "align label center");
+        fisico.add(usuarioPanel, "align label center, grow");
 
         IUsuario usr = EstadoApp.getUsuarioLogado();
         String icone = 
@@ -72,8 +72,8 @@ public class PainelUsuario implements OpcaoLista {
         usuarioPanel.add(iconLabel);
 
         JPanel info = new JPanel(new MigLayout(
-            "inset 4",
-            "[]10[]",
+            "inset 2%, w 100%",
+            "[shrink 0][grow][shrink 0]",
             "[][]"
         ));
 
@@ -84,6 +84,7 @@ public class PainelUsuario implements OpcaoLista {
         ((usr instanceof Fiscalizador) ? 
             "Fiscalizador" : 
         "Condutor");
+        info.add(new JPanel());
         
         info.add(new JLabel(tipo), "wrap");
         LocalDateTime ultimoLogin = usr.getUltimoLogin();
@@ -91,11 +92,11 @@ public class PainelUsuario implements OpcaoLista {
 
         info.add(new JLabel("Último login: " + ultimoLogin.format(fmt)), "span");
 
-        usuarioPanel.add(info, "wrap");
+        usuarioPanel.add(info, "wrap, grow");
 
         JSeparator sep = new JSeparator();
         sep.setPreferredSize(new Dimension(2, 2));
-        usuarioPanel.add(sep, "span");
+        fisico.add(sep, "w 85%!, align center");
         
 
 

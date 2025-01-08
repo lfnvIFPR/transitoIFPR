@@ -8,7 +8,5 @@ public interface IUsuario {
     String getNome();
     LocalDateTime getUltimoLogin();
     String[] getComandosAcessiveis();
-    void configurarComando(Comando comandoAtivo);
-    void executarComando();
 
 }

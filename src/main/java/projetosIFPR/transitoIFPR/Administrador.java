@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class Administrador implements IUsuario {
-    private Comando comandoAtivo;
     private String ID;
     private LocalDateTime ultimoLogin;
 
@@ -16,11 +15,6 @@ public class Administrador implements IUsuario {
         this.ID = ID;
         this.ultimoLogin = ultimoLogin;
     }
-
-    public void configurarComando(Comando comandoAtivo) { this.comandoAtivo = comandoAtivo; }
-    public void executarComando() { this.comandoAtivo.executar(); }
-
-
 
     public String getNome() {
         return this.ID;

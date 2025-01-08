@@ -7,6 +7,9 @@ public class EstadoApp {
     static private IUsuario usuarioLogado;
 
     public static IUsuario getUsuarioLogado() {
+        if (usuarioLogado == null)
+            System.err.println("Foi acessado o valor do usuário logado, " +
+                    "porém não havia usuário ativo.");
         return usuarioLogado;
     }
 
@@ -16,5 +19,9 @@ public class EstadoApp {
             return;
         }
         System.err.println("Usuário nulo foi configurado como logado. Ignorando...");
+    }
+
+    public static void resetUsuarioLogado() {
+        usuarioLogado = null;
     }
 }

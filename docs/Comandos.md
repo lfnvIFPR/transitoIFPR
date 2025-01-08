@@ -1,9 +1,10 @@
 # Comandos disponíveis:
 
 ## Geral
-- [ ] Listar os comandos acessíveis a mim
+- [X] Listar os comandos acessíveis a mim (visível)
+- [ ] Sair da conta
 - [X] Acessar dados do própio usuário
-- [ ] Ver notificações
+- [X] Ver notificações
 
 ## Administração
 - [ ] Listar usuários

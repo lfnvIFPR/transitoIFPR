@@ -1,12 +1,8 @@
 package projetosIFPR.transitoIFPR;
-
-import projetosIFPR.transitoIFPR.comandos.Comando;
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class Fiscalizador implements IUsuario {
-    private Comando comandoAtivo;
     private String ID;
     private LocalDateTime ultimoLogin;
 
@@ -16,10 +12,6 @@ public class Fiscalizador implements IUsuario {
         this.ID = ID;
         this.ultimoLogin = ultimoLogin;
     }
-
-    public void configurarComando(Comando comandoAtivo) { this.comandoAtivo = comandoAtivo; }
-    public void executarComando() { this.comandoAtivo.executar(); }
-
 
 
     public String getNome() {

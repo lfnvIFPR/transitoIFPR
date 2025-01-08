@@ -1,10 +1,8 @@
 package projetosIFPR.transitoIFPR.GUI;
 
+import projetosIFPR.transitoIFPR.GUI.Componentes.*;
 import projetosIFPR.transitoIFPR.IUsuario;
-import projetosIFPR.transitoIFPR.GUI.Componentes.OpcaoLista;
-import projetosIFPR.transitoIFPR.GUI.Componentes.PaineisAdmin;
-import projetosIFPR.transitoIFPR.GUI.Componentes.PaineisComum;
-import projetosIFPR.transitoIFPR.GUI.Componentes.PainelUsuario;
+import projetosIFPR.transitoIFPR.comandos.SairComando;
 import projetosIFPR.transitoIFPR.estado.EstadoApp;
 import projetosIFPR.transitoIFPR.utilidade.Palavras;
 
@@ -28,22 +26,36 @@ public class PainelPrincipal extends JFrame {
         setIconImage(icone.getImage());
 
         gerarLayout();
+        pack();
+        repaint();
     }
 
     private void gerarLayout() {
+        setLayout(new MigLayout(
+                "insets 0",
+                "[200!][800!]",
+                "[800!]"
+        ));
         conteudoPrimario = new JPanel(new CardLayout());
         conteudoPrimario.setOpaque(false);
-        add(conteudoPrimario, BorderLayout.CENTER);
-
-
 
         barraLateral = new JPanel();
-        barraLateral.setPreferredSize(new Dimension(200, 10));
         barraLateral.setLayout(new MigLayout("wrap 1, inset 1%"));
+        barraLateral.setBackground(new Color(0x2d2f30));
 
-        OpcaoLista[][] botoes = { 
-            {new PaineisComum(), new PainelUsuario("Usuário"), new PainelUsuario("abbaba")},
-            {new PaineisAdmin(), new PainelUsuario("Usuário administrador")}
+        add(barraLateral, "grow");
+        add(conteudoPrimario, "grow");
+
+        OpcaoLista[][] botoes = {
+            {
+                new PaineisComum(),
+                new PainelUsuario("Usuário"),
+                new PainelNotificacao("Notificações"),
+                new BotaoComando(new SairComando(), "Sair",
+                        "Encerrar sessão e voltar para a tela de log in.",
+                        true)
+            },
+            {new PaineisAdmin(), new PainelUsuario("Admin")}
         };
 
         IUsuario usuarioLogado = EstadoApp.getUsuarioLogado();
@@ -68,30 +80,46 @@ public class PainelPrincipal extends JFrame {
             }
 
             for (int i = 0; i < categoria.length; i++) {
-                OpcaoLista painel = categoria[i];
+                OpcaoLista opcao = categoria[i];
 
-                if (painel.possuiComponente()) {
-                    JButton botao = new JButton(painel.getNome());
-                    botao.setToolTipText(painel.getDescricao());
+                if (opcao.possuiComponente()) {
+                    JButton botao = new JButton(opcao.getNome());
+                    botao.setToolTipText(opcao.getDescricao());
                     barraLateral.add(botao, "gapleft 8%, w 80%!, align center");
-                    conteudoPrimario.add(painel.getComponente(), painel.getNome());
+                    conteudoPrimario.add(opcao.getComponente(), opcao.getNome());
                     botao.addActionListener(e -> {
                         CardLayout cl = (CardLayout) conteudoPrimario.getLayout();
-                        cl.show(conteudoPrimario, painel.getNome());
+                        cl.show(conteudoPrimario, opcao.getNome());
+                        conteudoPrimario.repaint();
                     });
                 } else {
-                    JLabel categoriaLabel = new JLabel(Palavras.capitalizar(nomeCategoria));
-                    barraLateral.add(categoriaLabel, "gapleft 4%, w 80%!");
+
+                    if (!(opcao instanceof BotaoExecutor)) {
+                        JLabel categoriaLabel = new JLabel(Palavras.capitalizar(nomeCategoria));
+                        barraLateral.add(categoriaLabel, "gapleft 4%, w 80%!");
+                        continue;
+                    }
+
+                    JButton botao = new JButton(opcao.getNome());
+                    botao.setToolTipText(opcao.getDescricao());
+
+                    if (opcao instanceof BotaoImportante) {
+                        botao.setBackground(new Color(0xff6666));
+                        botao.setForeground(new Color(0xeeeeee));
+                        botao.setFont(botao.getFont().deriveFont(Font.BOLD));
+                    }
+
+                    barraLateral.add(botao, "gapleft 8%, w 80%!, align center");
+                    botao.addActionListener(e -> {
+                        BotaoExecutor opcaoExecutora = (BotaoExecutor) opcao;
+                        opcaoExecutora.executarComando();
+                    });
 
                 }
             }
 
 
         }
-
-
-        barraLateral.setBackground(new Color(0x2d2f30));
-        add(barraLateral, BorderLayout.WEST);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800, 600);
