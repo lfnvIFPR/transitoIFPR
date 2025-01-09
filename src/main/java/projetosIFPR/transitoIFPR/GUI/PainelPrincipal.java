@@ -32,9 +32,9 @@ public class PainelPrincipal extends JFrame {
 
     private void gerarLayout() {
         setLayout(new MigLayout(
-                "insets 0",
-                "[200!][800!]",
-                "[800!]"
+                "insets 0, w 1000, h 800",
+                "[20%][80%]",
+                "[grow]"
         ));
 
         JPanel header = new JPanel(new MigLayout("insets 1%"));
@@ -44,7 +44,7 @@ public class PainelPrincipal extends JFrame {
 
         JLabel ifpr = new JLabel("IFPR");
         ifpr.putClientProperty("FlatLaf.styleClass", "h1");
-        header.add(ifpr, "gapleft 32");
+        header.add(ifpr);
 
         conteudoPrimario = new JPanel(new CardLayout());
         conteudoPrimario.setOpaque(false);

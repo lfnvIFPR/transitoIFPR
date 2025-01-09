@@ -33,6 +33,10 @@ public class GUIController {
 
     }
 
+    public static JFrame getAtivo() {
+        return ativo;
+    }
+
     public static void configurarAtivo(JFrame novo) {
         if (ativo != null) {
             ativo.dispose();

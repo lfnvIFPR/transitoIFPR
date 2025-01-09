@@ -2,15 +2,16 @@
 
 ## Geral
 - [X] Listar os comandos acessíveis a mim (visível)
-- [ ] Sair da conta
+- [X] Sair da conta
 - [X] Acessar dados do própio usuário
 - [X] Ver notificações
 
 ## Administração
-- [ ] Listar usuários
-- [ ] Listar administradores
-- [ ] Listar fiscais
-- [ ] Listar condutores
+- [X] Listar usuários
+- [X] Listar administradores
+- [X] Listar fiscais
+- [X] Listar condutores
+- [X] DAO
 
 ## Condutor
 - [ ] Listar minhas multas

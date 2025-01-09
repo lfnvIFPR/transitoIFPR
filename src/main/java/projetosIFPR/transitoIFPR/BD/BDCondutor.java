@@ -1,5 +1,5 @@
 package projetosIFPR.transitoIFPR.BD;
-import projetosIFPR.transitoIFPR.cripto.Hash;
+import projetosIFPR.transitoIFPR.utilidade.Hash;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

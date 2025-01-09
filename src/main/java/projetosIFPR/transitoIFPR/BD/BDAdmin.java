@@ -1,9 +1,7 @@
 package projetosIFPR.transitoIFPR.BD;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import projetosIFPR.transitoIFPR.cripto.Hash;
+import projetosIFPR.transitoIFPR.utilidade.Hash;
 
 // registro da tabela de administradores
 // poderia ser um public record, se não fosse pelo fato que geramos um salt para criptografar a senha;
