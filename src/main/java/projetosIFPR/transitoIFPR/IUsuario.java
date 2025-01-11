@@ -1,7 +1,4 @@
 package projetosIFPR.transitoIFPR;
-
-import projetosIFPR.transitoIFPR.comandos.Comando;
-
 import java.time.LocalDateTime;
 
 public interface IUsuario {
