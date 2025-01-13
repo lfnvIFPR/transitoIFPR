@@ -32,3 +32,9 @@ Caso deseje formar o arquivo `.jar` em seu sistema, siga esses passos:
 * `transitoIFPR-X.Y.Z-SNAPSHOT.jar`
 
 *Se o primeiro estiver presente, é o que deverá ser executado. Caso contrário, execute o de baixo.*
+
+---
+## Links externos
+
+- [Jira](https://estudantes-team-w0l7yl1h.atlassian.net/jira/software/projects/EN/boards/2/backlog?atlOrigin=eyJpIjoiYjVkNzc4NTQ0MjkyNDE0NGFkNDU1MmI1N2Y5MjEzMTMiLCJwIjoiaiJ9)
+- [Quant-UX](https://app.quant-ux.com/#/test.html?h=a2aa10acMns5SKYzezIlYJOFnB4XytFilMJ08LkMeqfg08ZZbLwrivhbkgRO&ln=en)
